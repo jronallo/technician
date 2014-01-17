@@ -1,0 +1,62 @@
+#! /usr/bin/env ruby
+
+require 'fileutils'
+
+dir = File.expand_path ARGV[0]
+
+output_dir = File.join(dir, 'output')
+tmp_dir = File.join(dir, 'tmp')
+$final_dir = File.join(dir, 'final')
+
+if !File.exist? output_dir
+  puts "You must point to a directory that has an 'output directory' filled with Export directories."
+  exit
+end
+
+FileUtils.mkdir(tmp_dir) unless File.exist? tmp_dir
+FileUtils.mkdir($final_dir) unless File.exist? $final_dir
+
+def basename_dir(filepath)
+  ext = File.extname(filepath)
+  numbered_name = File.basename(filepath, ext)
+  numbered_name.split('_').first
+end
+
+def issue_directory(filepath)
+  basename = basename_dir(filepath)
+  File.join($final_dir, basename)
+end
+
+issues = []
+
+
+# Moves all the text files to their final destination
+txt_files_glob = File.join(output_dir, '**', '*.txt')
+Dir.glob(txt_files_glob).each do |filepath|
+  issue_dir = issue_directory(filepath)
+  FileUtils.mkdir(issue_dir) unless File.exist? issue_dir
+  new_filepath = File.join(issue_dir, File.basename(filepath))
+  FileUtils.cp(filepath, new_filepath)
+end
+
+# Process the PDFs
+# not strictly necessary, but moves all the related PDFs together in one directory
+pdf_files_glob = File.join(output_dir, '**', '*.pdf')
+Dir.glob(pdf_files_glob).each do |filepath|
+  puts filepath
+  basename = basename_dir(filepath)
+  puts basename
+  pdfs_dir = File.join(tmp_dir, basename)
+  FileUtils.mkdir(pdfs_dir) unless File.exist? pdfs_dir
+  new_filepath = File.join(pdfs_dir, File.basename(filepath))
+  FileUtils.cp(filepath, new_filepath)
+end
+
+Dir.glob(File.join(tmp_dir, '*')).each do |pdf_dir|
+  pdf_files_glob = File.join(pdf_dir, '*.pdf')
+  issue_dir = issue_directory(pdf_dir)
+  basename = File.basename(pdf_dir)
+  final_pdf_name = File.join(issue_dir, basename + '.pdf')
+  `pdftk #{pdf_files_glob} cat output #{final_pdf_name}`
+end
+

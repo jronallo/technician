@@ -1,29 +1,49 @@
 # Technician
 
-TODO: Write a gem description
+Simple gem to wrap a script to process OCR output from a newspaper project.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'technician'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install technician
+- git clone the project
+- bundle install
+- gem build technician.gemspec
+- gem install 
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+$ technician /directory/for/processing/
+```
 
-## Contributing
+## Directories
 
-1. Fork it ( http://github.com/<my-github-username>/technician/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Initial directory should look something like this for two issues processed at the same time.
+
+```
+/directory/for/processing/
+└── output
+    ├── Export results 1.10.2014 12.10.36 PM
+    │   ├── technician-v48n8-1963-10-02_0001.txt
+    │   ├── technician-v48n8-1963-10-02_0002.txt
+    │   ├── technician-v48n8-1963-10-02_0003.txt
+    │   ├── technician-v48n8-1963-10-02_0004.txt
+    │   ├── technician-v48n9-1963-10-03_0001.txt
+    │   ├── technician-v48n9-1963-10-03_0002.txt
+    │   ├── technician-v48n9-1963-10-03_0003.txt
+    │   └── technician-v48n9-1963-10-03_0004.txt
+    └── Export results 1.10.2014 12.11.30 PM
+        ├── technician-v48n8-1963-10-02_0001.pdf
+        ├── technician-v48n8-1963-10-02_0002.pdf
+        ├── technician-v48n8-1963-10-02_0003.pdf
+        ├── technician-v48n8-1963-10-02_0004.pdf
+        ├── technician-v48n9-1963-10-03_0001.pdf
+        ├── technician-v48n9-1963-10-03_0002.pdf
+        ├── technician-v48n9-1963-10-03_0003.pdf
+        └── technician-v48n9-1963-10-03_0004.pdf
+
+```
+
+During processing two other directories will be created.
+
+1. /directory/for/processing/tmp/ can be blown away.
+2. /directory/for/processing/final/ are the versions that can be uploaded.
