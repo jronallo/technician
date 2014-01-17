@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Technician::VERSION
   spec.authors       = ["Jason Ronallo"]
   spec.email         = ["jronallo@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Process OCR output}
+  spec.description   = %q{Simple gem to wrap a script to process OCR output from a newspaper project.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
