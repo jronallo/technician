@@ -7,7 +7,7 @@ Simple gem to wrap a script to process OCR output from a newspaper project.
 - git clone the project
 - bundle install
 - gem build technician.gemspec
-- gem install 
+- gem install technician-0.0.1.gem
 
 ## Usage
 
